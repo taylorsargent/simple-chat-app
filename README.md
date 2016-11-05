@@ -2,9 +2,9 @@
 
 ## Roadmap : instructor TODO
 
-1. Setup package.json + yarn
-1. Setup Nodejs Server
-1. Setup socket.io event handlers
+1. ~~Setup package.json + yarn~~
+1. ~~Setup Nodejs Server~~
+1. ~~Setup socket.io event handlers~~
 1. Setup Gulp task
 1. Setup directory structure
 1. Write Atom plugin for running commands through GUI
