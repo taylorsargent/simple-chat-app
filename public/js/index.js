@@ -1,12 +1,16 @@
 /* eslint-disable */
 function scrollToBottom() {
-  $('#messages').scrollTop($('#messages li')
+  var heights = $('#messages li')
     .toArray()
     .map(function (li) {
       return $(li).height();
-    }).reduce(function (a, b) {
+    });
+
+  if (heights) {
+    $('#messages').scrollTop(heights.reduce(function (a, b) {
       return a + b;
     }));
+  }
 }
 
 $(function() {
