@@ -6,7 +6,7 @@ const CODES = require('./utils').CODES;
 
 router.get('/', (req, res, next) => {
   if (process.env.NODE_ENV !== 'development' &&
-    !req.headers.host.includes(process.env.ADDR)) next();
+    !req.headers.host.includes(process.env.HEROKU_ADDR)) next();
   else {
     res
       .status(CODES.OK)
