@@ -6,7 +6,7 @@ function scrollToBottom() {
       return $(li).height();
     });
 
-  if (heights) {
+  if (heights.length > 0) {
     $('#messages').scrollTop(heights.reduce(function (a, b) {
       return a + b;
     }));
