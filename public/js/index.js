@@ -42,7 +42,7 @@ $(function() {
     }
 
     $('#username-container').hide();
-    socket.emit('new-user', $('#username').val().trim());
+    socket.emit('user-join', $('#username').val().trim());
 
     return false;
   });
@@ -51,8 +51,8 @@ $(function() {
     return sendMessage();
   });
 
-  socket.on('new-user', function(name) {
-    console.log(name + ' has joined!');
+  socket.on('user-join', function(name) {
+    alert(name + ' has joined!');
   });
 
   socket.on('messages', function(data) {
@@ -62,6 +62,10 @@ $(function() {
           .text(message.username + ':' + message.message));
     });
     scrollToBottom();
+  });
+
+  socket.on('user-disconnect', function(name) {
+    alert(name + ' has left!');
   });
 
   socket.on('message', function(data) {
