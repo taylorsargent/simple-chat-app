@@ -64,10 +64,6 @@ $(function() {
     scrollToBottom();
   });
 
-  socket.on('user-disconnect', function(name) {
-    alert(name + ' has left!');
-  });
-
   socket.on('message', function(data) {
     $('#messages').append($('<li>').text(data.username + ':' + data.message));
     scrollToBottom();
