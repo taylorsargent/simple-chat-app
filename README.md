@@ -78,11 +78,13 @@ total: 70% + (30% deliverables)
     + negatives "
     + asking for feedback
 
-## 3 main screens
+## Main Screens
 
   1. Chat screen (main)
   2. List members (menu)
   3. Joined notification (notification)
+  4. Left notification
+  5. 404
 
 ### things to check for deliverables (/54) x3 = 20% each
 
