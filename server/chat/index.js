@@ -7,17 +7,44 @@ module.exports = class ChatManager {
   constructor(io) {
     this.users = [];
     this.messages = [];
+    this.io = io;
 
     io.on('connection', socket => {
-      socket.emit('messages', {
-        users: this.users,
+      socket.emit('messages', JSON.stringify({
+        users: this.users.map(u => u.username),
         messages: this.messages,
+      }));
+
+      socket.on('disconnect', () => {
+        const users = this.users.filter(u => u.socket === socket);
+
+        if (users.length > 0) {
+          io.emit('user-disconnect', users[0].username);
+          this.deleteUser(users[0]);
+        }
+      })
+
+      socket.on('check-username', response => {
+        const data = JSON.parse(response);
+        socket.emit('username-validation', JSON.stringify({
+          exists: this.hasUsername(data.name),
+          username: data.name,
+        }));
       });
-      socket.on('new-user', name => this.users.push(name));
-      socket.on('message', data => {
+
+      socket.on('user-join', name => {
+        this.users.push({
+          username: name,
+          socket: socket,
+        });
+        io.emit('user-join', name);
+      });
+
+      socket.on('message', response => {
+        const data = JSON.parse(response);
         data.timestamp = moment().valueOf();
         this.messages.push(data);
-        io.emit('message', data);
+        io.emit('message', JSON.stringify(data));
       });
     });
 
@@ -27,7 +54,11 @@ module.exports = class ChatManager {
     }, moment.duration(2, 'hours').asMilliseconds());
   }
 
-  deleteUser(name) {
-    this.users.splice(this.users.indexOf(name), 1);
+  deleteUser(user) {
+    this.users.splice(this.users.indexOf(user), 1);
+  }
+
+  hasUsername(name) {
+    return this.users.map(u => u.username).indexOf(name) > -1;
   }
 };
