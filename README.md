@@ -1,4 +1,4 @@
-# Web Dev 6
+# Web Dev 6 - plan
 
 ## Roadmap : instructor TODO
 
