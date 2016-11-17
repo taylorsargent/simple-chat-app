@@ -18,8 +18,11 @@ module.exports = class ChatManager {
       }));
 
       socket.on('get-template', name =>
-        socket.emit('send-template', fs.readFileSync(
-          path.join(__dirname, '..', '..', 'templates', `${name}.html`)).toString()));
+        socket.emit(`send-template-${name}`, JSON.stringify({
+          name: name,
+          template: fs.readFileSync(
+          path.join(__dirname, '..', '..', 'templates', `${name}.html`)).toString(),
+        })));
 
       socket.on('disconnect', () => {
         const users = this.users.filter(u => u.socket === socket);

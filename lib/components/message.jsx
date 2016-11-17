@@ -2,13 +2,13 @@ import React, {PropTypes} from 'react';
 
 class Message extends React.Component {
   render() {
-    const { template, user, text, timestamp } = this.props;
+    const { template, username, message, timestamp } = this.props;
 
     return (
-      <div dangerouslySetInnerHTML={{
+      <li dangerouslySetInnerHTML={{
         __html: template({
-          user,
-          text,
+          username,
+          message,
           timestamp,
         }),
       }} />
@@ -18,8 +18,8 @@ class Message extends React.Component {
 
 Message.propTypes = {
   template: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   timestamp: PropTypes.number,
 };
 

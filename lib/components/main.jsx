@@ -19,17 +19,20 @@ class MainScreen extends React.Component {
 
     Chat.init(this.socket = io());
 
-    [
+    Promise.all([
       'message',
       'login',
       'user',
       'info-notification',
       'connect-notification',
       'disconnect-notification',
-    ].map(template => {
-      Utils.getTemplate(this.socket, template)
-        .then(fn => this.templates[template] = fn);
-    });
+    ].map(template => Utils.getTemplate(this.socket, template)))
+      .then(templates => {
+        templates.map(t => this.templates[t.template] = t.fn);
+        this.updateState({templates: this.templates});
+      });
+
+    this.showLogin = true;
 
     this.login = Chat.login;
     this.message = Chat.message;
@@ -41,7 +44,7 @@ class MainScreen extends React.Component {
     this.socket.on('messages', response => {
       const data = JSON.parse(response);
       Utils.saveUsers(data.users || []);
-      this.setState(Object.assign({}, this.state, { messages: data.messages }));
+      this.updateState({ messages: data.messages });
       Utils.scrollToBottom();
     });
   }
@@ -56,17 +59,24 @@ class MainScreen extends React.Component {
 
   onMessage(response) {
     const data = JSON.parse(response);
-    this.updateState({messages: this.state.push(data)});
+    this.state.messages.push(data)
+    this.updateState({ messages: this.state.messages });
   }
 
   onLogin(response) {
     const data = JSON.parse(response);
-    if (data.exists) return this.updateState({
-      notifications: this.state.notifications.push({
+    if (data.exists) {
+      this.state.notifications.push({
         type: 'info',
         message: `The username ${data.username} is already taken.`,
-      }),
-    })
+      });
+
+      return this.updateState({ notifications: this.state.notifications });
+    } else {
+      Utils.saveUsername(data.username);
+      this.showLogin = false;
+      this.updateState({ username: data.username });
+    }
   }
 
   onUserConnect(name) {
@@ -75,67 +85,85 @@ class MainScreen extends React.Component {
     const users = Utils.getUsers();
     users.push(name);
     Utils.saveUsers(users);
-    this.updateState({
-      notifications: this.state.notifications.push({
-        type: 'connect',
-        message: `${name} has connected!`,
-      }),
+    this.state.notifications.push({
+      type: 'connect',
+      message: `${name} has connected!`,
     });
+    this.updateState({ notifications: this.state.notifications });
   }
 
   onUserDisconnect(name) {
     const users = Utils.getUsers();
     users.splice(users.indexOf(name), 1);
     Utils.saveUsers(users);
-    this.updateState({
-      notifications: this.state.notifications.push({
-        type: 'disconnect',
-        username: `${name} has disconnected!`,
-      }),
+    this.state.notifications.push({
+      type: 'disconnect',
+      username: `${name} has disconnected!`,
     });
+    this.updateState({ notifications: this.state.notifications });
   }
 
   render() {
     const { messages, notifications } = this.state;
-    // dangerouslySetInnerHTML={/*{ __html: this.templates.login() }*/}
 
     return (
       <main className="chat-app">
         <div className={[ 'login', this.showLogin ? 'show' : 'hide' ]
           .join(' ')}>
-          <div
-            className="input"
-          />
-          <button
-            className="login-button"
-            onClick={e => this.login(e.target.value)}
-          >
-            Login
-          </button>
+          <form className="login-form">
+            <div
+              dangerouslySetInnerHTML={{__html: this.templates.login ? this.templates.login() : '' }}
+            />
+            <button
+              className="login-button"
+              onClick={e => {
+                e.preventDefault();
+                this.login(document.getElementById('username').value);
+
+                return false;
+              }}
+            >
+              Login
+            </button>
+          </form>
         </div>
         <div className="notification-container">
           <ul className="notifications">
           {
-            notifications.map(notification =>
-              <Notification
-                template={this.templates[`${notification.type}-notification`]}
-                {...notification}
-              />
-            )
+            notifications.map((notification, index) => {
+              Utils.notify(notification.message);
+
+              return (
+                <Notification
+                  key={index}
+                  template={this.templates[`${notification.type}-notification`]}
+                  {...notification}
+                />
+              );
+            })
           }
           </ul>
         </div>
         <ul className="messages">
         {
-          messages.map(message =>
-            <Message
-              template={this.templates.message}
-              {...message}
-            />
-          )
+          messages.map((message, index) => {
+            if (!this.templates.message) return null;
+
+            return (
+              <Message
+                key={index}
+                template={this.templates.message}
+                {...message}
+              />
+            );
+          })
         }
         </ul>
-        <form id="message-bay" onSubmit={() => this.message(this.refs.m.value)}>
+        <form id="message-bay" onSubmit={e => {
+          e.preventDefault();
+          this.message(this.refs.m.value);
+          this.refs.m.value = '';
+        }}>
           <textarea
             className="message-container"
             ref="m"
