@@ -75,6 +75,7 @@ class MainScreen extends React.Component {
     } else {
       Utils.saveUsername(data.username);
       this.showLogin = false;
+      this.socket.emit('user-join', data.username);
       this.updateState({ username: data.username });
     }
   }
@@ -132,6 +133,11 @@ class MainScreen extends React.Component {
           {
             notifications.map((notification, index) => {
               Utils.notify(notification.message);
+
+              setTimeout(() => {
+                notifications.splice(index, 1);
+                this.updateState({ notifications: notifications });
+              }, 500);
 
               return (
                 <Notification

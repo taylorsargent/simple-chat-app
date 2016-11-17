@@ -42,6 +42,7 @@ module.exports = class ChatManager {
       });
 
       socket.on('user-join', name => {
+        console.log(name);
         this.users.push({
           username: name,
           socket: socket,
