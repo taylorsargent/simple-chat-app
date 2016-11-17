@@ -94,7 +94,7 @@ $(function() {
 
   socket.on('username-validation', function(response) {
     var data = JSON.parse(response);
-    if (data.exists) notify('The usename ' + data.username + ' already exists.');
+    if (data.exists) notify('The username ' + data.username + ' already exists.');
     else {
       $('#username-container').hide();
       saveUsername(data.username);
