@@ -5,7 +5,7 @@
   "scripts": {
     "pre-start": "yarn build",
     "start": "NODE_ENV=production node app.js",
-    "dev": "NODE_ENV=development node app.js",
+    "dev": "yarn build && NODE_ENV=development node app.js",
     "compress": "gulp compress",
     "build": "webpack --progress --colors"
   },
