@@ -109,8 +109,9 @@ class MainScreen extends React.Component {
 
     return (
       <main className="chat-app">
-        <div className={[ 'login', this.showLogin ? 'show' : 'hide' ]
-          .join(' ')}>
+        <div
+            className={[ 'login', this.showLogin ? 'show' : 'hide' ].join(' ')}
+        >
           <form className="login-form">
             <div
               dangerouslySetInnerHTML={{__html: this.templates.login ? this.templates.login() : '' }}
@@ -132,12 +133,10 @@ class MainScreen extends React.Component {
           <ul className="notifications">
           {
             notifications.map((notification, index) => {
-              Utils.notify(notification.message);
-
               setTimeout(() => {
                 notifications.splice(index, 1);
                 this.updateState({ notifications: notifications });
-              }, 500);
+            }, 20000);
 
               return (
                 <Notification
@@ -165,11 +164,14 @@ class MainScreen extends React.Component {
           })
         }
         </ul>
-        <form id="message-bay" onSubmit={e => {
-          e.preventDefault();
-          this.message(this.refs.m.value);
-          this.refs.m.value = '';
-        }}>
+        <form
+            id="message-bay"
+            onSubmit={e => {
+              e.preventDefault();
+              this.message(this.refs.m.value);
+              this.refs.m.value = '';
+            }}
+        >
           <textarea
             className="message-container"
             ref="m"

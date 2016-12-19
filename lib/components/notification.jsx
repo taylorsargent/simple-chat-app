@@ -1,11 +1,18 @@
 import React, {PropTypes} from 'react';
 
-class Notification extends React.Component {
+class Notification extends React.PureComponent {
   render() {
-    const { type, message } = this.props;
+    const { template, type, message } = this.props;
 
     return (
-      <h1> {type} {message} </h1>
+      <li
+          dangerouslySetInnerHTML={{
+            __html: template({
+              type,
+              message,
+            })
+          }}
+      />
     );
   }
 }
