@@ -1,6 +1,8 @@
 /* eslint-disable no-magic-numbers */
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const moment = require('moment');
 
 module.exports = class ChatManager {
@@ -15,6 +17,13 @@ module.exports = class ChatManager {
         messages: this.messages,
       }));
 
+      socket.on('get-template', name =>
+        socket.emit(`send-template-${name}`, JSON.stringify({
+          name: name,
+          template: fs.readFileSync(
+          path.join(__dirname, '..', '..', 'templates', `${name}.html`)).toString(),
+        })));
+
       socket.on('disconnect', () => {
         const users = this.users.filter(u => u.socket === socket);
 
@@ -22,7 +31,7 @@ module.exports = class ChatManager {
           io.emit('user-disconnect', users[0].username);
           this.deleteUser(users[0]);
         }
-      })
+      });
 
       socket.on('check-username', response => {
         const data = JSON.parse(response);
@@ -33,6 +42,7 @@ module.exports = class ChatManager {
       });
 
       socket.on('user-join', name => {
+        console.log(name);
         this.users.push({
           username: name,
           socket: socket,

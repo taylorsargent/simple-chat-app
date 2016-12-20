@@ -1,4 +1,4 @@
-# Web Dev 6
+# Web Dev 6 - plan
 
 ## Roadmap : instructor TODO
 
@@ -31,7 +31,7 @@ total: 70% + (30% deliverables)
     + get it running [1]
 
 + __Week 3__: [4]
-  + SASS: [2]
+  + SASS: [2] (material-ui form, 2txt inputs, 1 txt field, 1 btn)
     + Bourbon [1]
     + Compass [1]
     + neat [optional]

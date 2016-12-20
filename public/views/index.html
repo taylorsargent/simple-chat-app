@@ -10,7 +10,7 @@
         padding: 0;
       }
 
-      #username-container {
+      .login {
         position: fixed;
         width: 100vw;
         height: 100vh;
@@ -20,14 +20,19 @@
         background: aqua;
       }
 
-      #username-container .__center {
+      .hide {
+        display: none;
+        visibility: hidden;
+      }
+
+      .login-form .__center {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
       }
 
-      #messages {
+      .messages {
         list-style: none;
         padding: 0;
         margin: 0;
@@ -37,7 +42,7 @@
         overflow-y: scroll;
       }
 
-      #messages li {
+      .messages li {
         min-height: 50px;
         width: calc(100% - 50px);
         line-height: 50px;
@@ -46,7 +51,7 @@
         word-wrap: break-word;
       }
 
-      #messages li:nth-child(odd) {
+      .messages li:nth-child(odd) {
         background: #EEE;
       }
 
@@ -76,22 +81,9 @@
     </style>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form id="message-bay" action="">
-      <textarea id="m"></textarea><button>Send</button>
-    </form>
-    <div id="username-container">
-      <form id="username-form">
-        <div class="__center">
-          <input id="username" autocomplete="off" />
-          <label>username</label>
-          <div class="__underline"></div>
-          <button>enter</button>
-        </div>
-      </form>
-    </div>
+    <div id="app"></div>
   </body>
-  <script src="//cdn.socket.io/socket.io-1.4.5.js"></script>
+  <!-- <script src="//cdn.socket.io/socket.io-1.4.5.js"></script> -->
   <script src="//code.jquery.com/jquery-1.11.1.js"></script>
-  <script src="/js/index.js"></script>
+  <script src="/js/bundle.js"></script>
 </html>
