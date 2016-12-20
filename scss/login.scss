@@ -7,7 +7,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: $secondary;
+  background: lighten($primary, 10%);
+  font-size: 1.15em;
 
   .login-form {
     @include center();
@@ -28,13 +29,15 @@
         background: transparent;
         border: none;
         width: 100%;
+        color: white;
+        font-size: 1.15em;
 
         & + label {
           @include position(absolute);
           @include transition(all 0.2s ease);
           top: 0;
           left: 0;
-          font-size: 1.25em;
+          font-size: 1.15em;
           text-transform: capitalize;
           pointer-events: none;
         }
@@ -60,7 +63,7 @@
 
       .__underline {
         @include position(relative);
-        border-bottom: 2px solid $acc2;
+        border-bottom: 2px solid $acc1;
         width: 100%;
 
         &:after,
@@ -71,7 +74,7 @@
           bottom: -2px;
           width: 0;
           height: 2px;
-          background: $acc1;
+          background: $acc2;
         }
 
         &:after {
@@ -95,16 +98,17 @@
   width: 150px;
   height: 50px;
   border: none;
-  background: $primary;
-  color: $secondary;
-  font-size: 1.25em;
+  background: $acc1;
+  color: white;
+  font-size: 1.15em;
+  overflow: hidden;
   @include shadow();
   @include transition(all 0.15s linear);
 
   &:hover {
     @include shadow(black, 0.2);
     @include transform(scale(0.98));
-    background: shade($primary, 5%);
+    background: shade($acc1, 5%);
     cursor: pointer;
   }
 
@@ -113,34 +117,26 @@
     outline: none;
   }
 
-  .ripple {
+  @keyframes ripple {
+    from {
+      @include transform(scale(0));
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      @include transform(scale(250));
+    }
+  }
+
+  .circle {
     @include position(absolute);
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
-    @keyframes ripple {
-      from {
-        @include transform(scale(0));
-        opacity: 1;
-      }
-      to {
-        opacity: 0;
-        @include transform(scale(250));
-      }
-    }
-
-    .circle {
-      @include position(absolute);
-      background: rgba($secondary, 0.2);
-      border: 1px solid transparent;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: ripple 0.75s 1;
-      top: 50%;
-      left: 50%;
-    }
+    background: rgba(white, 0.4);
+    border: 1px solid transparent;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: ripple 0.75s 1;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
   }
 }

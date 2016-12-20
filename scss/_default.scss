@@ -12,6 +12,9 @@
 }
 
 body {
+  @include margin(0);
+  @include padding(0);
+  color: white;
   overflow: hidden;
   font-family: 'Open Sans';
 }

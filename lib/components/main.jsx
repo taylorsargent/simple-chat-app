@@ -128,7 +128,17 @@ class MainScreen extends React.Component {
                   className="login-button"
                   onClick={e => {
                       e.preventDefault();
-                      this.login(document.getElementById('username').value);
+                      const value = document.getElementById('username').value.trim();
+                      if (!value) {
+                          const { notifications } = this.state;
+                          notifications.push({
+                              type: 'info',
+                              'message': 'Your username musn\'t be empty. 😱',
+                          });
+                          this.updateState({ notifications: notifications });
+                      } else {
+                          this.login(value);
+                      }
 
                       return false;
                   }}
@@ -183,8 +193,18 @@ class MainScreen extends React.Component {
                 id="message-bay"
                 onSubmit={e => {
                     e.preventDefault();
-                    this.message(this.refs.m.value);
-                    this.refs.m.value = '';
+                    const value = this.refs.m.value.trim();
+                    if (!value) {
+                        const { notifications } = this.state;
+                        notifications.push({
+                            type: 'info',
+                            'message': 'Your message musn\'t be empty. 😱',
+                        });
+                        this.updateState({ notifications: notifications });
+                    } else {
+                        this.message(value);
+                        this.refs.m.value = '';
+                    }
                 }}
             >
               <textarea
