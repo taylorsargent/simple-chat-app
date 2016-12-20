@@ -1,2 +1,17 @@
 @import 'bourbon/bourbon';
 @import 'neat/neat';
+@import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
+@import 'colors';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+@mixin center() {
+  @include display(flex);
+  @include flex-direction(column);
+  @include justify-content(center);
+  @include align-items(center);
+}
+
+body {
+  overflow: hidden;
+  font-family: 'Open Sans';
+}

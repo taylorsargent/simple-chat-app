@@ -132,6 +132,7 @@ class MainScreen extends React.Component {
 
                       return false;
                   }}
+                  required
                 >
                   Login
                 </button>
