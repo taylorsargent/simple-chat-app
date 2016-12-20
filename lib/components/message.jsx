@@ -1,7 +1,16 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import moment from 'moment';
 
 class Message extends React.PureComponent {
+    componentDidMount() {
+        ReactDOM.findDOMNode(this).scrollIntoView();
+    }
+
+    componentDidUpdate() {
+        ReactDOM.findDOMNode(this).scrollIntoView();
+    }
+
     render() {
         const { template, username, message, timestamp } = this.props;
 
