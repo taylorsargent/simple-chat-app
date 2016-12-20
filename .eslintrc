@@ -26,7 +26,7 @@
       "comma-spacing": ["error", { "before": false, "after": true }],
       "comma-style": ["error", "last"],
       "eol-last": "error",
-      "indent": ["error", 2, {
+      "indent": ["error", 4, {
         "SwitchCase": 1,
         "VariableDeclarator": 1,
         "MemberExpression": 1
