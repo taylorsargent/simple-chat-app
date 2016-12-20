@@ -104,7 +104,7 @@ class MainScreen extends React.Component {
         Utils.saveUsers(users);
         this.state.notifications.push({
             type: 'disconnect',
-            username: `${name} has disconnected!`,
+            message: `${name} has disconnected!`,
         });
         this.updateState({
             notifications: this.state.notifications,
@@ -117,6 +117,9 @@ class MainScreen extends React.Component {
 
         return (
           <main className="chat-app">
+            <button className={[ 'user-list-button', !this.showLogin ? 'show' : 'hide' ].join(' ')}>
+                <span className="icon ion-navicon" />
+            </button>
             <div
                 className={[ 'login', this.showLogin ? 'show' : 'hide' ].join(' ')}
             >

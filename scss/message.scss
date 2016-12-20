@@ -10,6 +10,7 @@ $message-bay-height: 150px;
   height: calc(100vh - #{$message-bay-height});
   overflow-x: hidden;
   overflow-y: scroll;
+  color: black;
 }
 
 #message-bay {

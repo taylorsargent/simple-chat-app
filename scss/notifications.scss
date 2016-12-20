@@ -1,0 +1,41 @@
+@import 'default';
+
+.notification-container {
+  @include position(fixed);
+  @include center();
+  @include padding(25px);
+  padding-top: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: $top + 2;
+  pointer-events: none;
+
+  & * {
+    pointer-events: none;
+  }
+
+  .notifications {
+    @include center();
+    width: 100%;
+    list-style: none;
+
+    .notification {
+      @include padding(10px 15px);
+      @include margin(15px 0);
+      border-radius: 2.5px;
+      width: 100%;
+      background: $acc2;
+      color: white;
+
+      &.disconnect {
+        background: rgb(245, 82, 82);
+      }
+
+      &.connect {
+        color: black;
+        background: rgb(145, 251, 123);
+      }
+    }
+  }
+}
