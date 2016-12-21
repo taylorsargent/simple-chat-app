@@ -49,6 +49,8 @@ class MainScreen extends React.Component {
             this.updateState({ messages: data.messages });
             Utils.scrollToBottom();
         });
+
+        this.sendMessage = this.sendMessage.bind(this);
     }
 
     updateState(state) {
@@ -96,6 +98,21 @@ class MainScreen extends React.Component {
             notifications: this.state.notifications,
             users: users,
         });
+    }
+
+    sendMessage(message) {
+        const value = message.trim();
+        if (!value) {
+            const { notifications } = this.state;
+            notifications.push({
+                type: 'info',
+                'message': 'Your message musn\'t be empty. 😱',
+            });
+            this.updateState({ notifications: notifications });
+        } else {
+            this.message(value);
+            this.refs.m.value = '';
+        }
     }
 
     onUserDisconnect(name) {
@@ -196,23 +213,18 @@ class MainScreen extends React.Component {
                 id="message-bay"
                 onSubmit={e => {
                     e.preventDefault();
-                    const value = this.refs.m.value.trim();
-                    if (!value) {
-                        const { notifications } = this.state;
-                        notifications.push({
-                            type: 'info',
-                            'message': 'Your message musn\'t be empty. 😱',
-                        });
-                        this.updateState({ notifications: notifications });
-                    } else {
-                        this.message(value);
-                        this.refs.m.value = '';
-                    }
+                    this.sendMessage(this.refs.m.value.trim());
                 }}
             >
               <textarea
                 className="message-container"
                 ref="m"
+                onKeyPress={e => {
+                    if (e.charCode == 13 && e.ctrlKey) {
+                        e.preventDefault();
+                        this.sendMessage(e.target.value);
+                    }
+                }}
               />
               <button
                 type="submit"

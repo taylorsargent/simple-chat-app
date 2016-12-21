@@ -20,7 +20,7 @@ class Message extends React.PureComponent {
                     __html: template({
                         username,
                         message,
-                        timestamp: moment(timestamp).format('HH:MM:SS'),
+                        timestamp: moment(timestamp).format('h:mm:ss a'),
                     }),
                 }}
             />
