@@ -9,8 +9,8 @@ const CSS_DIR = path.resolve('public', 'css');
 const JS_DIR = path.resolve('public', 'js');
 
 gulp.task('compile', () => {
-  execSync(`compass clean`, { cwd: __dirname });
-  execSync(`compass compile`, { cwd: __dirname });
+    execSync(`compass clean`, { cwd: __dirname });
+    execSync(`compass compile`, { cwd: __dirname });
 });
 
 gulp.task('clean', () =>
@@ -20,12 +20,12 @@ gulp.task('compress', [ 'compress:css', 'compress:js' ]);
 
 gulp.task('compress:css', [ 'clean', 'compile' ], () =>
   gulp.src(path.join(CSS_DIR, '**/*.css'))
-    .pipe(concat('style.min.css'))
-    .pipe(uglifycss())
-    .pipe(gulp.dest(CSS_DIR)));
+      .pipe(concat('style.min.css'))
+      .pipe(uglifycss())
+      .pipe(gulp.dest(CSS_DIR)));
 
 gulp.task('compress:js', () =>
   gulp.src(path.join(JS_DIR, '**/*.js'))
-    .pipe(concat('index.min.js'))
-    .pipe(uglify)
-    .pipe(gulp.dest(JS_DIR)));
+      .pipe(concat('index.min.js'))
+      .pipe(uglify)
+      .pipe(gulp.dest(JS_DIR)));

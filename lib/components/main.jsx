@@ -49,6 +49,8 @@ class MainScreen extends React.Component {
             this.updateState({ messages: data.messages });
             Utils.scrollToBottom();
         });
+
+        this.sendMessage = this.sendMessage.bind(this);
     }
 
     updateState(state) {
@@ -98,13 +100,28 @@ class MainScreen extends React.Component {
         });
     }
 
+    sendMessage(message) {
+        const value = message.trim();
+        if (!value) {
+            const { notifications } = this.state;
+            notifications.push({
+                type: 'info',
+                'message': 'Your message musn\'t be empty. 😱',
+            });
+            this.updateState({ notifications: notifications });
+        } else {
+            this.message(value);
+            this.refs.m.value = '';
+        }
+    }
+
     onUserDisconnect(name) {
         const users = Utils.getUsers();
         users.splice(users.indexOf(name), 1);
         Utils.saveUsers(users);
         this.state.notifications.push({
             type: 'disconnect',
-            username: `${name} has disconnected!`,
+            message: `${name} has disconnected!`,
         });
         this.updateState({
             notifications: this.state.notifications,
@@ -117,6 +134,9 @@ class MainScreen extends React.Component {
 
         return (
           <main className="chat-app">
+            <button className={[ 'user-list-button', !this.showLogin ? 'show' : 'hide' ].join(' ')}>
+                <span className="icon ion-navicon" />
+            </button>
             <div
                 className={[ 'login', this.showLogin ? 'show' : 'hide' ].join(' ')}
             >
@@ -128,10 +148,21 @@ class MainScreen extends React.Component {
                   className="login-button"
                   onClick={e => {
                       e.preventDefault();
-                      this.login(document.getElementById('username').value);
+                      const value = document.getElementById('username').value.trim();
+                      if (!value) {
+                          const { notifications } = this.state;
+                          notifications.push({
+                              type: 'info',
+                              'message': 'Your username musn\'t be empty. 😱',
+                          });
+                          this.updateState({ notifications: notifications });
+                      } else {
+                          this.login(value);
+                      }
 
                       return false;
                   }}
+                  required
                 >
                   Login
                 </button>
@@ -182,13 +213,18 @@ class MainScreen extends React.Component {
                 id="message-bay"
                 onSubmit={e => {
                     e.preventDefault();
-                    this.message(this.refs.m.value);
-                    this.refs.m.value = '';
+                    this.sendMessage(this.refs.m.value.trim());
                 }}
             >
               <textarea
                 className="message-container"
                 ref="m"
+                onKeyPress={e => {
+                    if (e.charCode == 13 && e.ctrlKey) {
+                        e.preventDefault();
+                        this.sendMessage(e.target.value);
+                    }
+                }}
               />
               <button
                 type="submit"
