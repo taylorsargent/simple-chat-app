@@ -1,0 +1,10 @@
+@import 'colors';
+
+.right {
+  @include position(relative);
+
+  height: 100vh;
+  width: 33vw;
+
+  background: $secondary;
+}
