@@ -1,0 +1,54 @@
+@import 'default';
+
+body {
+  margin: 0;
+}
+
+#message-bay {
+  height: 100px;
+}
+
+.message-container {
+  position: fixed;
+  bottom: 0;
+  width: 80%;
+  height: 100px;
+  font-family: sans-serif;
+  font-size: 1em;
+}
+
+.message-button {
+  width: 19%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 100px;
+  font-size: 1.5em;
+  font-family: sans-serif;
+}
+
+.chat-app {
+  position: relative;
+}
+
+.user-list {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20%;
+  height: 50%;
+  font-size: 1em;
+  font-family: sans-serif;
+  list-style-type: none;
+}
+
+.messages {
+  width: 80%;
+  height: 50%;
+  padding-left: 10px;
+}
+
+.messages li {
+  font-family: sans-serif;
+  list-style-type: none;
+}
