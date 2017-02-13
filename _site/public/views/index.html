@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Simple Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.min.css" />
+    <style>
+      .hide {
+        display: none;
+        visibility: hidden;
+      }
+
+      .login-form .__center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+      }
+
+      .messages li {
+        min-height: 50px;
+        line-height: 25px;
+        width: 100%;
+        padding: 0 25px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .messages li:nth-child(odd) {
+        background: #EEE;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/js/bundle.js"></script>
+</html>
