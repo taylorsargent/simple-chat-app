@@ -32,14 +32,19 @@ body {
 }
 
 .user-list {
+  width: 19%;
+  height: 100%;
   position: absolute;
   right: 0;
   top: 0;
-  width: 20%;
-  height: 50%;
   font-size: 1em;
   font-family: sans-serif;
-  list-style-type: none;
+  background-color: #e8ebef;
+}
+
+.user-list ul {
+	list-style-type: none;
+	padding-left: 20px;
 }
 
 .messages {
@@ -61,5 +66,17 @@ body {
 .message-stuff .timestamp {
   float: right;
   width: 20%;
+}
 
+.timestamp {
+  display: none;
+}
+
+.message-stuff {
+position: relative;
+}
+
+.user-message {
+float: left;
+width: 80%;
 }
