@@ -52,3 +52,14 @@ body {
   font-family: sans-serif;
   list-style-type: none;
 }
+
+.message-stuff .user-message {
+  float: left;
+  width: 80%;
+}
+
+.message-stuff .timestamp {
+  float: right;
+  width: 20%;
+
+}
