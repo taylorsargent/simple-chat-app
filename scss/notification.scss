@@ -1,0 +1,44 @@
+//lower right corner, rectangular, newest on the bottom
+.notification-container {
+  position: fixed;
+
+  bottom: 0;
+  right: 0;
+
+  height: 100vh;
+  width: 10vw;
+
+  min-width: 250px;
+}
+
+.notification-container .notifications {
+  // ul
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.notifications li {
+  margin: 2.5px;
+}
+
+.notifications li .notifications {
+  padding: 10px 25px;
+}
+
+.notifications li .notifications.connect {
+  background: rgb(56, 139, 207);
+}
+
+.notifications li .notifications.disconnect {
+  background: rgb(228, 231, 61);
+}
+
+.notifications li .notifications.info {
+  background: rgb(213, 84, 196);
+}
