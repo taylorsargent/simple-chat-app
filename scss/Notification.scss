@@ -1,0 +1,43 @@
+.notification-container {
+  position: fixed;
+
+  bottom: 0;
+  right: 0;
+
+  height: 100vh;
+  width: 10vw;
+
+  min-width: 250px;
+}
+
+.notification-container .notifications {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 100vh;
+}
+
+.notifications li {
+  margin: 2.5px;
+}
+
+.notifications li .notification{
+  padding: 10px 25px;
+  border-radius: 5px;
+}
+
+.notifications li .notification.connect {
+  background: rgb(62, 245, 152);
+}
+.notifications li .notification.disconnect{
+  background: rgb(230, 15, 169);
+}
+.notifications li .notification.info{
+  background: rgb(100, 33, 242);
+}
